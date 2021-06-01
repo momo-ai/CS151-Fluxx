@@ -1,18 +1,20 @@
 
 <!-- saved from url=(0055)http://logicprogramming.stanford.edu/examples/test.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-    <title>Problem 3: Dice Gambling Game</title>
+    <title>Fluxx</title>
     <script type="text/javascript" src="./Index_files/epilog.js">
     </script>
     <script type="text/javascript" src="./Index_files/worksheets.js">
     </script>
   </head>
   <center> 
-  <h1>The Gambling Game of Dice</h1>
+  <h1>Fluxx - The game with ever changing rules.</h1>
 
-  <p> Welcome to the gambling game of dice. This game is quite simple: guess what number you believe the dice is going to produce and click the button to roll it. 
-    If your guess is correct, you get a point! 
+
+  <p>
+    Fluxx® is a registered trademark of Looney Labs®! This project does not profit in anyway from their IP.
   </p>
+  <a href="https://www.looneylabs.com/lit/rules/fluxx-rules">The Rules!</a>
 
 
 
@@ -36,12 +38,56 @@
       <tbody><tr><td id="roll" width="20" style="cursor:pointer" onclick="modbutton(this)">6</td></tr></tbody></table>
 
     
-  
+  <!-- dynamic rules with no initial value: keepersize, handsize, activegoal,  -->
   </center>
-  <textarea id="lambda" style="display:none">  
-    dicenum(6)
-    guess(1)
-    points(0)
+  <textarea id="lambda" style="display:none">
+    isplayer(vinay)
+    isplayer(george)
+    control(vinay)
+    drawnum(1)
+    playnum(1)
+    cardsplayed(0)
+    decknum(100)
+    handsize(100)
+    keeper(brain)
+    keeper(bread)
+    keeper(chocolate)
+    keeper(cookies)
+    keeper(death)
+    keeper(dreams)
+    keeper(love)
+    keeper(milk)
+    keeper(money)
+    keeper(moon)
+    keeper(peace)
+    keeper(rocket)
+    keeper(sleep)
+    keeper(sun)
+    keeper(television)
+    keeper(time)
+    keeper(toaster)
+    keeper(war)
+    goal(appliances,toaster,television)
+    goal(baked,bread,cookies)
+    goal(bedtime,sleep,time)
+    goal(chocolatecookies,chocolate,cookies)
+    goal(chocolatemilk,chocolate,milk)
+    goal(deathbychocolate,chocolate,death)
+    goal(dreamland,sleep,dreams)
+    goal(loveonthebrain,love,brain)
+    goal(hippyism,peace,love)
+    goal(milkandcookies,milk,cookies)
+    goal(nightandday,sun,moon)
+    goal(nuclear,rocket,war)
+    goal(rocketscience,rocket,brain)
+    goal(apollo,rocket,moon)
+    goal(hotchocolate,sun,chocolate)
+    goal(timeismoney,time,money)
+    goal(timetravel,time,rocket)
+    goal(toast,bread,toaster)
+    goal(waranddeath,war,death)
+    goal(lottery,dreams,money)
+
   </textarea>
 
   <textarea id="library" style="display:none">  
