@@ -1,0 +1,61 @@
+
+<!-- saved from url=(0055)http://logicprogramming.stanford.edu/examples/test.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Problem 3: Dice Gambling Game</title>
+    <script type="text/javascript" src="./Index_files/epilog.js">
+    </script>
+    <script type="text/javascript" src="./Index_files/worksheets.js">
+    </script>
+  </head>
+  <center> 
+  <h1>The Gambling Game of Dice</h1>
+
+  <p> Welcome to the gambling game of dice. This game is quite simple: guess what number you believe the dice is going to produce and click the button to roll it. 
+    If your guess is correct, you get a point! 
+  </p>
+
+
+
+  <body onload="initialize()">
+
+    <label>Player 1: Please put your guess right here! </label>
+    <select id="guessOne" style="width:80" onchange="modselector(this)">
+      <option value="unknown"></option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+    </select>
+
+    <h3>points scored:</h3>
+    <p id="score">0</p>
+    <label>Click this thang to roll the dice. Will you win? Or do you have a gambling addiction? </label>
+    <table cellspacing="0" border="1">
+      <tbody><tr><td id="roll" width="20" style="cursor:pointer" onclick="modbutton(this)">6</td></tr></tbody></table>
+
+    
+  
+  </center>
+  <textarea id="lambda" style="display:none">  
+    dicenum(6)
+    guess(1)
+    points(0)
+  </textarea>
+
+  <textarea id="library" style="display:none">  
+    value(guessOne, A) :- guess(A)
+    select(guessOne, A) :: guess(A)
+    select(guessOne, A) :: guess(B) ==&gt; ~guess(B)
+
+    innerhtml(score, A) :- points(A)
+    updatescore(X) :: guess(A) & same(A, X) & points(C) & evaluate(plus(1, C), S) ==&gt; ~points(C) & points(S)
+    
+    innerhtml(roll,A) :- dicenum(A)
+    click(roll) :: dicenum(A) ==&gt; ~dicenum(A)
+    click(roll) :: evaluate(plus(1, round(random()), round(random()), round(random()), round(random()), round(random())), X) ==&gt; dicenum(X) & updatescore(X)
+  </textarea>
+
+
+<div id="5ffd3688-cbac-4dd8-9e31-829bc5efbd6a-bottom"></div></body></html>
