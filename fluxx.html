@@ -1,0 +1,125 @@
+
+<!-- saved from url=(0055)http://logicprogramming.stanford.edu/examples/test.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Fluxx</title>
+<script type='text/javascript'src='http://epilog.stanford.edu/javascript/epilog.js'></script>
+<script type='text/javascript'src='http://minimal.stanford.edu/worksheets/javascript/worksheets.js'></script>
+  </head>
+  <center> 
+  <h1>Fluxx - The game with ever changing rules.</h1>
+
+  <div>
+    <p>
+      Fluxx is a registered trademark of Looney Labs! This project does not profit in anyway from their IP.
+    </p>
+    <a href="https://www.looneylabs.com/lit/rules/fluxx-rules">The Rules!</a>
+  </div>
+
+  <hr/>
+
+  <body onload="initialize()">
+    <div style="width:500px;height:150px;border:1px solid #000;">
+      <h1 style="color:green;" id="win"></h1>
+      <h2 style="display:none; color:green;" id="windescription">has won the game!</h2>
+
+        <h2 style="display:none; color:lightseagreen;" id="turndescription1">It is currently</h2>
+        <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
+        <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
+    </div>
+
+    <Button style="padding: 10px; display:none;" id="draw">Draw a card</Button>
+    <Button style="padding: 10px; display:none;" id="endturn">End your turn</Button>
+  </body>
+
+    
+  <!-- dynamic rules with no initial value: keepersize, handsize, activegoal,  -->
+  </center>
+  <textarea hidden id="lambda" style="display:none">
+    keeper(brain)
+    keeper(bread)
+    keeper(chocolate)
+    keeper(cookies)
+    keeper(death)
+    keeper(dreams)
+    keeper(love)
+    keeper(milk)
+    keeper(money)
+    keeper(moon)
+    keeper(peace)
+    keeper(rocket)
+    keeper(sleep)
+    keeper(sun)
+    keeper(television)
+    keeper(time)
+    keeper(toaster)
+    keeper(war)
+    goal(appliances,toaster,television)
+    goal(baked,bread,cookies)
+    goal(bedtime,sleep,time)
+    goal(chocolatecookies,chocolate,cookies)
+    goal(chocolatemilk,chocolate,milk)
+    goal(deathbychocolate,chocolate,death)
+    goal(dreamland,sleep,dreams)
+    goal(loveonthebrain,love,brain)
+    goal(hippyism,peace,love)
+    goal(milkandcookies,milk,cookies)
+    goal(nightandday,sun,moon)
+    goal(nuclear,rocket,war)
+    goal(rocketscience,rocket,brain)
+    goal(apollo,rocket,moon)
+    goal(hotchocolate,sun,chocolate)
+    goal(timeismoney,time,money)
+    goal(timetravel,time,rocket)
+    goal(toast,bread,toaster)
+    goal(waranddeath,war,death)
+    goal(lottery,dreams,money)
+
+    control(mrg)
+    isplayer(vinay)
+    isplayer(mrg)
+    take(0)
+    play(0)
+    numplayed(0)
+    maxHand(3)
+    maxHoard(3)
+    numdrawn(0)
+    numplayed(0)
+    hand(vinay,[])
+    hand(mrg,[])
+    hoard(vinay,[])
+    hoard(mrg,[])
+    goalinplay()
+    deck([appliances,baked,bedtime,chocolatemilk,deathbychocolate,dreamland,loveonthebrain,hippyism,milkandcookies,nightandday,nuclear,rocketscience,apollo,hotchocolate,timeismoney,timetravel,toast,waranddeath,lottery,brain,bread,chocolate,cookies,death,dreams,love,milk,money,moon,peace,rocket,sleep,television,time,toaster,war])
+
+  </textarea>
+
+  <textarea id="library" style="display:none">  
+    remove(X,nil,nil)
+    remove(X,X!L,M) :- remove(X,L,M)
+    remove(X,Y!L,Y!M) :- distinct(X,Y) & remove(X,L,M)
+
+    keepers(A) :- evaluate(setofall(B, keeper(B)), A)
+
+    goals(A) :- evaluate(setofall(B, goal(B, Q, Z)), A)
+
+    lessthan(A, B) :- evaluate(min(A,B),A) & distinct(A,B)
+
+    won(P) :- goalinplay(G) & goal(G, A, B) & hoard(P, L) & member(A, L) & member(B, L)
+
+    innerhtml(win, P) :- won(P)
+    style(windescription,display,block) :- won(P)
+
+    style(turndescription1,display,inline) :- ~won(P)
+    style(turndescription2,display,inline) :- ~won(P)
+    innerhtml(turn, P) :- ~won(Q) & control(P)
+
+    style(draw,display,block) :- ~won(P) & numdrawn(N) & take(X) & lessthan(N, X)
+    style(endturn,display,block) :- ~won(P) & numplayed(N) & play(X) & evaluate(N, X)
+    
+    click(endturn) :: control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) ==&gt; ~control(P) & control(Q)
+
+   
+  </textarea>
+
+
+<div id="5ffd3688-cbac-4dd8-9e31-829bc5efbd6a-bottom"></div></body></html>
