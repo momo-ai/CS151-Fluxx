@@ -26,7 +26,7 @@
         <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
         <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
     </div>
-    <Button style="padding: 10px; display:none;" id="draw" onclick="modbutton(this)">Draw a card</Button>
+    <Button style="padding: 10px; display:none;" id="start" onclick="modbutton(this)">Deal starting hands</Button>
     <Button style="padding: 10px; display:none;" id="endturn" onclick="modbutton(this)">End your turn</Button>
     <Button style="padding: 10px; display:none;" id="deckreshuffle" onclick="modbutton(this)">Reshuffle deck</Button>
     <p style="display:none;font-weight: bold;" id="maxhand">Max cards in hand:</p>
@@ -181,7 +181,8 @@
     hoard(vinay,[])
     hoard(mrg,[])
     goalinplay(nogoal)
-    deck([appliances,baked,bedtime,chocolatemilk,deathbychocolate,dreamland,loveonthebrain,hippyism,milkandcookies,nightandday,nuclear,rocketscience,apollo,hotchocolate,timeismoney,timetravel,toast,waranddeath,lottery,brain,bread,chocolate,cookies,death,dreams,love,milk,money,moon,peace,rocket,sleep,television,time,toaster,war,chocolatecookies,sun])
+
+    state(startcondition)
 
   </textarea>
 
@@ -192,13 +193,17 @@
 
     keepers(A) :- evaluate(setofall(B, keeper(B)), A)
 
-    goals(A) :- evaluate(setofall(B, goal(B, Q, Z)), A)
+    goals(A) :- evaluate(setofall(B, goal(B, Q, Z) & ~discardedgoal(G)), A)
 
     lessthan(A, B) :- evaluate(min(A,B),A) & distinct(A,B)
 
     won(P) :- goalinplay(G) & goal(G, A, B) & hoard(P, L) & member(A, L) & member(B, L)
 
     innerhtml(win, P) :- won(P)
+
+    isdeckempty :- evaluate(countofall(A, indeck(A)), 0)
+    deck(D) :- evaluate(setofall(A, indeck(A)), D)
+    indeck(C) :- keepers(K) & goals(G) & or(member(C, K) & ~activecard(C), member(C, G) & ~activecard(C))
 
 
 
@@ -211,12 +216,12 @@
     innerhtml(turn, P) :- isplayer(P) & control(P)
     style(turn,display,none) :- isplayer(P) & won(P)
 
-    style(draw,display,block) :- ~won(P) & numdrawn(N) & take(X) & lessthan(N, X)           % Note, under a closed-world interpretation it
-    style(draw,display,none) :- or(won(P), numdrawn(N) & take(X) & ~lessthan(N, X))         % is safe to check ~won(P) without checking if
+    style(start,display,block) :- ~won(P) & state(startcondition)           % Note, under a closed-world interpretation it
+    style(start,display,none) :- or(won(P), ~state(startcondition))         % is safe to check ~won(P) without checking if
     style(endturn,display,block) :- ~won(P) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
     style(endturn,display,none) :- or(won(P), numplayed(N) & play(X) & ~evaluate(N, X))     % is equivalent to falsity
-    style(deckreshuffle,display,none) :- or(won(P), ~evaluate(deck(L),nil)) 
-    style(deckreshuffle,display,block) :- ~won(P) & deck(L) & evaluate(length(L), 0) 
+    style(deckreshuffle,display,none) :- or(won(P), ~isdeckempty) 
+    style(deckreshuffle,display,block) :- ~won(P) & isdeckempty 
 
     activecard(A) :- or(goalinplay(A), isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L))
 
@@ -225,9 +230,9 @@
     style(card(A), background, gold) :- isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L)
     style(card(A), background, pink) :- isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L)
     style(card(A), background, red) :- isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L)
-    style(card(A), background, gray) :- deck(D) & ~member(A, D) & ~activecard(A)
+    style(card(A), background, gray) :- discardedgoal(A)
     
-    style(card(A), background, white) :- deck(D) & member(A, D) & ~activecard(A)
+    style(card(A), background, white) :- indeck(C)
 
     style(maxhand,display,inline) :- isplayer(P) & ~won(P)
     innerhtml(maxhandnum, N) :- isplayer(P) & ~won(P) & maxHand(N)
@@ -248,16 +253,21 @@
     click(endturn) :: control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) & numplayed(NP) & play(PL) & evaluate(NP, PL) & numdrawn(ND) & take(DL) & evaluate(ND, DL) ==&gt; ~control(P) & control(Q) & ~numdrawn(ND) & numdrawn(0) & ~numplayed(NP) & numplayed(0)
 
     newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
-    newgame() :: keepers(A) & goals(B) & evaluate(append(B, A), F) & newrules(C) & deck(Q) & evaluate(append(F, C), Z) ==&gt; ~deck(Q) & deck(Z) 
+    newgame() :: goalinplay(A) ==&gt; ~goalinplay(A) & goalinplay(nogoal)
 
-    click(draw) :: control(P) & isplayer(P) & hand(P, L) & deck(Z) & numdrawn(N) & take(X) & lessthan(N, X) & evaluate(choose(A, member(A, Z)), S) & evaluate(append([S], L), Q) & remove(S, Z, M) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, L) & hand(P, Q) & ~deck(Z) & deck(M) & ~numdrawn(N) & numdrawn(NN)
+    % click(draw) :: control(P) & isplayer(P) & take(X) & numdrawn(N) & lessthan(N, X) & hand(P, L) & deck(D) & indeck(C) & evaluate(choose(C, D), CC) & evaluate(append([C], L), Q) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, L) & hand(P, Q) & ~numdrawn(N) & numdrawn(NN)
+
+    click(start) :: isplayer(P) & isplayer(Q) & distinct(P, Q) & deal(P, 3) & deal(Q, 3) ==&gt; ~control(P) & control(Q)
+
+    deal(P, N) :- lessthan(0, N) & hand(P, L) & deck(D) & indeck(C) & evaluate(choose(C, D), CC) & append([CC], L) & evaluate(minus(N, 1), NN) & deal(P, NN)
+    
+    % switch :- control(P) & isplayer(P) & take(N) & deal(P, N)
 
     click(card(C)) :: keeper(C) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & hoard(P, H) & evaluate(append([C], H), HH) & remove(C, L, LL) & evaluate(plus(N, 1), NN) ==&gt; ~hoard(P, H) & hoard(P, HH) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
 
-    click(card(C)) :: goals(LG) & member(C, LG) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(G) & remove(C, L, LL) & evaluate(plus(N, 1), NN) & goalinplay(A) ==&gt; ~goalinplay(G) & goalinplay(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
+    click(card(C)) :: goals(LG) & member(C, LG) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(G) & remove(C, L, LL) & evaluate(plus(N, 1), NN) & goalinplay(A) ==&gt; ~goalinplay(G) & goalinplay(C) & discardedgoal(G) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
 
-
-    click(deckreshuffle) :: deck(B) & evaluate(length(B), 0) & keepers(K) & goals(G) & evaluate(setofall(A, or(member(A, K) & ~activecard(A), member(A, G) & ~activecard(A))), Z) ==&gt; ~deck(B) & deck(Z)
+    click(deckreshuffle) :: isdeckempty & discardedgoal(G) ==&gt; ~discardedgoal(G)
 
 
    
