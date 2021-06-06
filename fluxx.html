@@ -26,6 +26,10 @@
         <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
         <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
     </div>
+<<<<<<< Updated upstream
+=======
+    <Button style="padding: 10px; display:none;" id="start" onclick="modbutton(this)">Draw initial hand</Button>
+>>>>>>> Stashed changes
     <Button style="padding: 10px; display:none;" id="draw" onclick="modbutton(this)">Draw a card</Button>
     <Button style="padding: 10px; display:none;" id="endturn" onclick="modbutton(this)">End your turn</Button>
     <Button style="padding: 10px; display:none;" id="deckreshuffle" onclick="modbutton(this)">Reshuffle deck</Button>
@@ -176,7 +180,13 @@
     hoard(vinay,[])
     hoard(mrg,[])
     goalinplay(nogoal)
+<<<<<<< Updated upstream
     deck([appliances,baked,bedtime,chocolatemilk,deathbychocolate,dreamland,loveonthebrain,hippyism,milkandcookies,nightandday,nuclear,rocketscience,apollo,hotchocolate,timeismoney,timetravel,toast,waranddeath,lottery,brain,bread,chocolate,cookies,death,dreams,love,milk,money,moon,peace,rocket,sleep,television,time,toaster,war,chocolatecookies,sun])
+=======
+
+    firstmove(vinay)
+    firstmove(mrg)
+>>>>>>> Stashed changes
 
   </textarea>
 
@@ -187,7 +197,11 @@
 
     keepers(A) :- evaluate(setofall(B, keeper(B)), A)
 
+<<<<<<< Updated upstream
     goals(A) :- evaluate(setofall(B, goal(B, Q, Z)), A)
+=======
+    goals(A) :- evaluate(setofall(B, goal(B, Q, Z) & ~discardedgoal(B)), A)
+>>>>>>> Stashed changes
 
     lessthan(A, B) :- evaluate(min(A,B),A) & distinct(A,B)
 
@@ -206,9 +220,17 @@
     innerhtml(turn, P) :- isplayer(P) & control(P)
     style(turn,display,none) :- isplayer(P) & won(P)
 
+<<<<<<< Updated upstream
     style(draw,display,block) :- ~won(P) & numdrawn(N) & take(X) & lessthan(N, X)           % Note, under a closed-world interpretation it
     style(draw,display,none) :- or(won(P), numdrawn(N) & take(X) & ~lessthan(N, X))         % is safe to check ~won(P) without checking if
     style(endturn,display,block) :- ~won(P) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
+=======
+    style(start, display, block) :- ~won(P) & control(Q) & firstmove(Q)
+    style(start, display, none) :- or(won(P), control(Q) & ~firstmove(Q))
+    style(draw,display,block) :- ~won(P) & control(P) &  ~firstmove(P) & numdrawn(N) & take(X) & lessthan(N,X)         % Note, under a closed-world interpretation it
+    style(draw,display,none) :- or(won(P), control(Q) & firstmove(Q), numdrawn(N) & take(X) & evaluate(N, X))         % is safe to check ~won(P) without checking if
+    style(endturn,display,block) :- ~won(P) & numdrawn(ND) & take(T) & evaluate(ND, T) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
+>>>>>>> Stashed changes
     style(endturn,display,none) :- or(won(P), numplayed(N) & play(X) & ~evaluate(N, X))     % is equivalent to falsity
     style(deckreshuffle,display,none) :- or(won(P), ~evaluate(deck(L),nil)) 
     style(deckreshuffle,display,block) :- ~won(P) & deck(L) & evaluate(length(L), 0) 
@@ -216,6 +238,7 @@
     activecard(A) :- or(goalinplay(A), isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L))
 
     style(card(G), background, green) :- goalinplay(G)
+<<<<<<< Updated upstream
     style(card(A), background, yellow) :- isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L)
     style(card(A), background, gold) :- isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L)
     style(card(A), background, pink) :- isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L)
@@ -223,6 +246,15 @@
     style(card(A), background, gray) :- deck(D) & ~member(A, D) & ~activecard(A)
     
     style(card(A), background, white) :- deck(D) & member(A, D) & ~activecard(A)
+=======
+    style(card(A), background, yellow) :- hand(mrg, L) & member(A, L)
+    style(card(A), background, gold) :- hoard(mrg, L) & member(A, L)
+    style(card(A), background, pink) :- hand(vinay, L) & member(A, L)
+    style(card(A), background, red) :- hoard(vinay, L) & member(A, L)
+    style(card(A), background, gray) :- discardedgoal(A)
+    
+    style(card(A), background, white) :- indeck(A)
+>>>>>>> Stashed changes
 
     style(maxhand,display,inline) :- isplayer(P) & ~won(P)
     innerhtml(maxhandnum, N) :- isplayer(P) & ~won(P) & maxHand(N)
@@ -242,17 +274,42 @@
 
     click(endturn) :: control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) & numplayed(NP) & play(PL) & evaluate(NP, PL) & numdrawn(ND) & take(DL) & evaluate(ND, DL) ==&gt; ~control(P) & control(Q) & ~numdrawn(ND) & numdrawn(0) & ~numplayed(NP) & numplayed(0)
 
+<<<<<<< Updated upstream
     newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
     newgame() :: keepers(A) & goals(B) & evaluate(append(B, A), F) & newrules(C) & deck(Q) & evaluate(append(F, C), Z) ==&gt; ~deck(Q) & deck(Z) 
 
     click(draw) :: control(P) & isplayer(P) & hand(P, L) & deck(Z) & numdrawn(N) & take(X) & lessthan(N, X) & evaluate(choose(A, member(A, Z)), S) & evaluate(append([S], L), Q) & remove(S, Z, M) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, L) & hand(P, Q) & ~deck(Z) & deck(M) & ~numdrawn(N) & numdrawn(NN)
+=======
+    click(draw) :: control(P) & numdrawn(N) & take(X) & lessthan(N, X) & hand(P, PL) & deck(D) & evaluate(choose(PC1, member(PC1, D)), PC) & evaluate(append([PC], PL), PLN) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, PL) & hand(P, PLN) & ~numdrawn(N) & numdrawn(NN)
 
+    %%% deals initial hand %%%
+    click(start) :: control(P) & isplayer(P) & hand(P, PL) & deck(D) & evaluate(choose(PC1, member(PC1, D)), PC) & deck(D2) & evaluate(choose(PC2, member(PC2, D2)), PCC) & deck(D3) & mutex(PC, PCC) & evaluate(choose(PC3, member(PC3, D3)), PCCC) & mutex(PC, PCC, PCCC) & evaluate(append([PC, PCC, PCCC], PL), PLN) ==&gt; ~hand(P, PL) & hand(P, PLN) & ~firstmove(P)
+>>>>>>> Stashed changes
+
+    %%% operation to play cards - keepers %%%
     click(card(C)) :: keeper(C) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & hoard(P, H) & evaluate(append([C], H), HH) & remove(C, L, LL) & evaluate(plus(N, 1), NN) ==&gt; ~hoard(P, H) & hoard(P, HH) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
 
+<<<<<<< Updated upstream
     click(card(C)) :: goals(LG) & member(C, LG) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(G) & remove(C, L, LL) & evaluate(plus(N, 1), NN) & goalinplay(A) ==&gt; ~goalinplay(G) & goalinplay(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
 
 
     click(deckreshuffle) :: deck(B) & evaluate(length(B), 0) & keepers(K) & goals(G) & evaluate(setofall(A, or(member(A, K) & ~activecard(A), member(A, G) & ~activecard(A))), Z) ==&gt; ~deck(B) & deck(Z)
+=======
+    %%% operation to play cards - goals %%%
+    click(card(C)) :: goals(G) & member(C, G) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(GP) & remove(C, L, LL) & evaluate(plus(N, 1), NN) ==&gt; ~goalinplay(GP) & goalinplay(C) & discardedgoal(GP) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
+
+
+    %%% operation to add discarded cards to deck %%%
+    click(deckreshuffle) :: isdeckempty & discardedgoal(G) ==&gt; ~discardedgoal(G)
+>>>>>>> Stashed changes
+
+    %%% operations to restart/reset game %%%
+    newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
+    newgame() :: goalinplay(A) ==&gt; ~goalinplay(A) & goalinplay(nogoal)
+
+    load :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
+
+    load :: goalinplay(A) ==&gt; ~goalinplay(A) & goalinplay(nogoal)
 
 
    
