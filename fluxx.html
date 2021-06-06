@@ -22,9 +22,12 @@
       <h1 style="color:green;" id="win"></h1>
       <h2 style="display:none; color:green;" id="windescription">has won the game!</h2>
 
-        <h2 style="display:none; color:lightseagreen;" id="turndescription1">It is currently</h2>
-        <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
-        <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
+      <h2 style="display:none; color:lightseagreen;" id="turndescription1">It is currently</h2>
+      <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
+      <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
+
+      <h2 style="display:none; color:coral;" id="hoardlimitdescription">Select keepers to discard and meet the hoard limit</h2>
+      <h2 style="display:none; color:coral;" id="handlimitdescription">Select cards to discard and conform to the handlimit</h2>
     </div>
     <Button style="padding: 10px; display:none;" id="start" onclick="modbutton(this)">Draw initial hand</Button>
     <Button style="padding: 10px; display:none;" id="draw" onclick="modbutton(this)">Draw a card</Button>
@@ -238,6 +241,8 @@
 
     lessthan(A, B) :- evaluate(min(A,B),A) & distinct(A,B)
 
+    lessthanequals(A, B) :- evaluate(min(A,B),A)
+
     won(P) :- goalinplay(G) & goal(G, A, B) & hoard(P, L) & member(A, L) & member(B, L)
 
     innerhtml(win, P) :- won(P)
@@ -256,6 +261,11 @@
     style(turndescription2,display,none) :- isplayer(P) & won(P)
     innerhtml(turn, P) :- isplayer(P) & control(P)
     style(turn,display,none) :- isplayer(P) & won(P)
+
+    style(hoardlimitdescription,display,inline) :- numplayed(N) & play(T) & evaluate(N, T) & control(P) & hoard(P, H) & maxHoard(MH) & lessthan(MH, length(H))
+    style(hoardlimitdescription,display,none) :- ~and(numplayed(N) & play(T) & evaluate(N, T), control(P) & hoard(P, H) & maxHoard(MH) & lessthan(MH, length(H)))
+    style(handlimitdescription,display,inline) :- numplayed(N) & play(T) & evaluate(N, T) & control(P) & hand(P, H) & maxHand(MH) & lessthan(MH, length(H))
+    style(handlimitdescription,display,none) :- ~and(numplayed(N) & play(T) & evaluate(N, T), control(P) & hand(P, H) & maxHand(MH) & lessthan(MH, length(H)))
 
     style(start, display, block) :- ~won(P) & control(Q) & firstmove(Q)
     style(start, display, none) :- or(won(P), control(Q) & ~firstmove(Q))
