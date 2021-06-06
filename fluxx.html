@@ -26,10 +26,7 @@
         <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
         <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
     </div>
-<<<<<<< Updated upstream
-=======
     <Button style="padding: 10px; display:none;" id="start" onclick="modbutton(this)">Draw initial hand</Button>
->>>>>>> Stashed changes
     <Button style="padding: 10px; display:none;" id="draw" onclick="modbutton(this)">Draw a card</Button>
     <Button style="padding: 10px; display:none;" id="endturn" onclick="modbutton(this)">End your turn</Button>
     <Button style="padding: 10px; display:none;" id="deckreshuffle" onclick="modbutton(this)">Reshuffle deck</Button>
@@ -89,38 +86,65 @@
           <td id="card(toast)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Toast <label style="font-size:12">Bread + Toaster</label></td>
           <td id="card(waranddeath)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: War&Death <label style="font-size:12">War + Death</label></td>
           <td id="card(lottery)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Lotto <label style="font-size:12">Dreams + Money</label></td>
-          <td id="card(4,9)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: FUCK <label style="font-size:12">Game over</label></td>
+          <td id="card(draw2)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Draw 2<label style="font-size:12"></label></td>
+          <td id="card(draw3)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Draw 3<label style="font-size:12"></label></td>
+        </tr>
+        <tr>
+          <td id="card(draw4)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Draw 4<label style="font-size:12"></label></td>
+          <td id="card(draw5)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Draw 5<label style="font-size:12"></label></td>
+          <td id="card(play2)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Play 2<label style="font-size:12"></label></td>
+          <td id="card(play3)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Play 3<label style="font-size:12"></label></td>
+          <td id="card(play4)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Play 4<label style="font-size:12"></label></td>
+          <td id="card(handlimit0)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Hand limit 0<label style="font-size:12"></label></td>
+          <td id="card(handlimit1)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Hand limit 1<label style="font-size:12"></label></td>
+          <td id="card(handlimit2)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Hand limit 2<label style="font-size:12"></label></td>
+          <td id="card(handlimit4)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Hand limit 4<label style="font-size:12"></label></td>
+          <td id="card(handlimit5)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: Hand limit 5<label style="font-size:12"></label></td>
+        </tr>
+        <tr>
+          <td id="card(keeperlimit2)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper Limit: 2<label style="font-size:12"></label></td>
+          <td id="card(keeperlimit3)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper Limit: 3<label style="font-size:12"></label></td>
+          <td id="card(keeperlimit4)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper Limit: 4<label style="font-size:12"></label></td>
+          <td id="xxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Steal opponent hand<label style="font-size:12"></label></td>
+          <td id="xxxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Erase opponent hand<label style="font-size:12"></label></td>
+          <td id="xxxxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Erase opponent keepers<label style="font-size:12"></label></td>
+          <td id="xxxxxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Draw one more<label style="font-size:12"></label></td>
         </tr>
       </tbody>
     </table>
 
-    <div style="background:black;width:500px;height:300px;">
+    <div style="background:black;width:500px;height:200px;">
       <h2 style="display:block;font-weight: bold; text-decoration: underline;color:white;">Color code</h2>
-      <p style="display:inline-block;font-weight:bold;color:green;">Current Goal (Green): </p>
-      <p style="display:inline-block;font-weight:bold;color:green" id="thegoalthatiscurrent"> </p>
+      <p style="display:inline;font-weight: bold;color:pink;" >Vinay's hand color: PINK</p>
       <br>
-      <p style="display:inline;font-weight:bold;color:pink;">Vinay's hand (Pink): </p> 
-      <p id="handofvinay" style="display:inline;font-weight:bold;color:pink;"></p>
-      <br>
-      <br>
-      <p style="display:inline;font-weight:bold;color:red">Vinay's hoard (Red): </p>
-      <p id="hoardofvinay" style="display:inline;font-weight:bold;color:red"></p>
+      <p style="display:inline;font-weight: bold;color:red;">Vinay's hoard color: RED</p>
       <br> 
+      <p style="display:inline;font-weight: bold;color:yellow;" id="take">MRG's hand color: YELLOW</p>
       <br>
-      <p style="display:inline;font-weight:bold;color:yellow">MRG's hand (Yellow): </p> 
-      <p id="handofmrg" style="display:inline;font-weight:bold;color:yellow"></p>
+      <p style="display:inline;font-weight: bold;color:gold;" id="play">MRG's hoard color: GOLD</p>
       <br>
+      <p style="display:inline;font-weight: bold;color:white;" id="take">Card in deck: WHITE</p>
       <br>
-      <p style="display:inline;font-weight:bold;color:gold;">MRG's hoard (Gold): </p>
-      <p id="hoardofmrg" style="display:inline;font-weight:bold;color:gold;"></p>
-      <br>
-      <br>
-      <p style="display:inline;font-weight: bold;color:white;" id="take">Card in deck: White</p>
-      <br>
-      <br>
-      <p style="display:inline;font-weight: bold;color:gray;" id="play">Card discarded: Gray</p>
-      <br>
+      <p style="display:inline;font-weight: bold;color:gray;" id="play">Card discarded: GRAY</p>
     </div>
+
+    <br>
+    <p style="display:inline-block;font-weight:bold;" color="green">CURRENT GOAL: </p>
+    <p style="display:inline-block;font-weight:bold;" color="green" id="thegoalthatiscurrent"> </p>
+    <br>
+    <br>
+    <p style="display:inline;font-weight:bold;">Vinay's hand: </p> 
+    <p id="handofvinay" style="display:inline;font-weight:bold;"></p>
+    <br>
+    <p style="display:inline;font-weight:bold;">Vinay's hoard: </p>
+    <p id="hoardofvinay" style="display:inline;font-weight:bold;"></p>
+    <br>
+    <p style="display:inline;font-weight:bold;">MRG's hand: </p> 
+    <p id="handofmrg" style="display:inline;font-weight:bold;"></p>
+    <br>
+    <p style="display:inline;font-weight:bold;">MRG's hoard: </p>
+    <p id="hoardofmrg" style="display:inline;font-weight:bold;"></p>
+    <br>
   </body>
 
     
@@ -165,6 +189,21 @@
     goal(toast,bread,toaster)
     goal(waranddeath,war,death)
     goal(lottery,dreams,money)
+    newrule(draw2)
+    newrule(draw3)
+    newrule(draw4)
+    newrule(draw5)
+    newrule(play2)
+    newrule(play3)
+    newrule(play4)
+    newrule(handlimit0)
+    newrule(handlimit1)
+    newrule(handlimit2)
+    newrule(handlimit4)
+    newrule(handlimit5)
+    newrule(keeperlimit2)
+    newrule(keeperlimit3)
+    newrule(keeperlimit4)
 
     control(mrg)
     isplayer(vinay)
@@ -180,13 +219,9 @@
     hoard(vinay,[])
     hoard(mrg,[])
     goalinplay(nogoal)
-<<<<<<< Updated upstream
-    deck([appliances,baked,bedtime,chocolatemilk,deathbychocolate,dreamland,loveonthebrain,hippyism,milkandcookies,nightandday,nuclear,rocketscience,apollo,hotchocolate,timeismoney,timetravel,toast,waranddeath,lottery,brain,bread,chocolate,cookies,death,dreams,love,milk,money,moon,peace,rocket,sleep,television,time,toaster,war,chocolatecookies,sun])
-=======
 
     firstmove(vinay)
     firstmove(mrg)
->>>>>>> Stashed changes
 
   </textarea>
 
@@ -197,17 +232,19 @@
 
     keepers(A) :- evaluate(setofall(B, keeper(B)), A)
 
-<<<<<<< Updated upstream
-    goals(A) :- evaluate(setofall(B, goal(B, Q, Z)), A)
-=======
     goals(A) :- evaluate(setofall(B, goal(B, Q, Z) & ~discardedgoal(B)), A)
->>>>>>> Stashed changes
+
+    actions(A) :- evaluate(setofall(B, newrule(B) & ~discardedrule(B)), A)
 
     lessthan(A, B) :- evaluate(min(A,B),A) & distinct(A,B)
 
     won(P) :- goalinplay(G) & goal(G, A, B) & hoard(P, L) & member(A, L) & member(B, L)
 
     innerhtml(win, P) :- won(P)
+
+    isdeckempty :- evaluate(countofall(A, indeck(A)), 0)
+    deck(D) :- evaluate(setofall(A, indeck(A)), D)
+    indeck(C) :- keepers(K) & goals(G) & actions(A) & or(member(C, K) & ~activecard(C), member(C, G) & ~activecard(C), member(C, A) & ~activecard(C))
 
 
 
@@ -220,41 +257,26 @@
     innerhtml(turn, P) :- isplayer(P) & control(P)
     style(turn,display,none) :- isplayer(P) & won(P)
 
-<<<<<<< Updated upstream
-    style(draw,display,block) :- ~won(P) & numdrawn(N) & take(X) & lessthan(N, X)           % Note, under a closed-world interpretation it
-    style(draw,display,none) :- or(won(P), numdrawn(N) & take(X) & ~lessthan(N, X))         % is safe to check ~won(P) without checking if
-    style(endturn,display,block) :- ~won(P) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
-=======
     style(start, display, block) :- ~won(P) & control(Q) & firstmove(Q)
     style(start, display, none) :- or(won(P), control(Q) & ~firstmove(Q))
     style(draw,display,block) :- ~won(P) & control(P) &  ~firstmove(P) & numdrawn(N) & take(X) & lessthan(N,X)         % Note, under a closed-world interpretation it
     style(draw,display,none) :- or(won(P), control(Q) & firstmove(Q), numdrawn(N) & take(X) & evaluate(N, X))         % is safe to check ~won(P) without checking if
     style(endturn,display,block) :- ~won(P) & numdrawn(ND) & take(T) & evaluate(ND, T) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
->>>>>>> Stashed changes
     style(endturn,display,none) :- or(won(P), numplayed(N) & play(X) & ~evaluate(N, X))     % is equivalent to falsity
-    style(deckreshuffle,display,none) :- or(won(P), ~evaluate(deck(L),nil)) 
-    style(deckreshuffle,display,block) :- ~won(P) & deck(L) & evaluate(length(L), 0) 
+    style(deckreshuffle,display,none) :- or(won(P), ~isdeckempty) 
+    style(deckreshuffle,display,block) :- ~won(P) & isdeckempty 
 
     activecard(A) :- or(goalinplay(A), isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L))
 
+    %%% coloring for goals and keepers %%%
     style(card(G), background, green) :- goalinplay(G)
-<<<<<<< Updated upstream
-    style(card(A), background, yellow) :- isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L)
-    style(card(A), background, gold) :- isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L)
-    style(card(A), background, pink) :- isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L)
-    style(card(A), background, red) :- isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L)
-    style(card(A), background, gray) :- deck(D) & ~member(A, D) & ~activecard(A)
-    
-    style(card(A), background, white) :- deck(D) & member(A, D) & ~activecard(A)
-=======
     style(card(A), background, yellow) :- hand(mrg, L) & member(A, L)
     style(card(A), background, gold) :- hoard(mrg, L) & member(A, L)
     style(card(A), background, pink) :- hand(vinay, L) & member(A, L)
     style(card(A), background, red) :- hoard(vinay, L) & member(A, L)
-    style(card(A), background, gray) :- discardedgoal(A)
+    style(card(A), background, gray) :- or(discardedgoal(A), discardedrule(A))
     
     style(card(A), background, white) :- indeck(A)
->>>>>>> Stashed changes
 
     style(maxhand,display,inline) :- isplayer(P) & ~won(P)
     innerhtml(maxhandnum, N) :- isplayer(P) & ~won(P) & maxHand(N)
@@ -272,36 +294,77 @@
     innerhtml(handofmrg, Z) :- hand(mrg, A) & evaluate(delistify(A), Z)
     innerhtml(hoardofmrg, Z) :- hoard(mrg, A) & evaluate(delistify(A), Z)
 
+    %%% ends turn, giving control to other player %%%
     click(endturn) :: control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) & numplayed(NP) & play(PL) & evaluate(NP, PL) & numdrawn(ND) & take(DL) & evaluate(ND, DL) ==&gt; ~control(P) & control(Q) & ~numdrawn(ND) & numdrawn(0) & ~numplayed(NP) & numplayed(0)
 
-<<<<<<< Updated upstream
-    newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
-    newgame() :: keepers(A) & goals(B) & evaluate(append(B, A), F) & newrules(C) & deck(Q) & evaluate(append(F, C), Z) ==&gt; ~deck(Q) & deck(Z) 
-
-    click(draw) :: control(P) & isplayer(P) & hand(P, L) & deck(Z) & numdrawn(N) & take(X) & lessthan(N, X) & evaluate(choose(A, member(A, Z)), S) & evaluate(append([S], L), Q) & remove(S, Z, M) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, L) & hand(P, Q) & ~deck(Z) & deck(M) & ~numdrawn(N) & numdrawn(NN)
-=======
+    %%% deals single card %%%
     click(draw) :: control(P) & numdrawn(N) & take(X) & lessthan(N, X) & hand(P, PL) & deck(D) & evaluate(choose(PC1, member(PC1, D)), PC) & evaluate(append([PC], PL), PLN) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, PL) & hand(P, PLN) & ~numdrawn(N) & numdrawn(NN)
 
     %%% deals initial hand %%%
     click(start) :: control(P) & isplayer(P) & hand(P, PL) & deck(D) & evaluate(choose(PC1, member(PC1, D)), PC) & deck(D2) & evaluate(choose(PC2, member(PC2, D2)), PCC) & deck(D3) & mutex(PC, PCC) & evaluate(choose(PC3, member(PC3, D3)), PCCC) & mutex(PC, PCC, PCCC) & evaluate(append([PC, PCC, PCCC], PL), PLN) ==&gt; ~hand(P, PL) & hand(P, PLN) & ~firstmove(P)
->>>>>>> Stashed changes
 
     %%% operation to play cards - keepers %%%
     click(card(C)) :: keeper(C) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & hoard(P, H) & evaluate(append([C], H), HH) & remove(C, L, LL) & evaluate(plus(N, 1), NN) ==&gt; ~hoard(P, H) & hoard(P, HH) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
 
-<<<<<<< Updated upstream
-    click(card(C)) :: goals(LG) & member(C, LG) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(G) & remove(C, L, LL) & evaluate(plus(N, 1), NN) & goalinplay(A) ==&gt; ~goalinplay(G) & goalinplay(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
-
-
-    click(deckreshuffle) :: deck(B) & evaluate(length(B), 0) & keepers(K) & goals(G) & evaluate(setofall(A, or(member(A, K) & ~activecard(A), member(A, G) & ~activecard(A))), Z) ==&gt; ~deck(B) & deck(Z)
-=======
     %%% operation to play cards - goals %%%
     click(card(C)) :: goals(G) & member(C, G) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(GP) & remove(C, L, LL) & evaluate(plus(N, 1), NN) ==&gt; ~goalinplay(GP) & goalinplay(C) & discardedgoal(GP) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
 
 
+    %%%%% this can be decomposed better, but we're too far into our design to change it %%%
+
+    %%% operation to draw cards - action: drawX %%%
+    click(card(C)) :: evaluate(C, draw2) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & take(T) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~take(T) & take(2)
+
+    click(card(C)) :: evaluate(C, draw3) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & take(T) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~take(T) & take(3)
+
+    click(card(C)) :: evaluate(C, draw4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & take(T) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~take(T) & take(4)
+
+    click(card(C)) :: evaluate(C, draw5) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & take(T) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~take(T) & take(5)
+
+    %%% operation to play cards - action: playX %%%
+    click(card(C)) :: evaluate(C, play2) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & play(PL) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~play(PL) & play(2)
+
+    click(card(C)) :: evaluate(C, play3) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & play(PL) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~play(PL) & play(3)
+
+    click(card(C)) :: evaluate(C, play4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & play(PL) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~play(PL) & play(4)
+
+    %%% operation to play cards - action: handlimitX %%%
+    click(card(C)) :: evaluate(C, handlimit0) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHand(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHand(MH) & maxHand(0)
+
+    click(card(C)) :: evaluate(C, handlimit1) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHand(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHand(MH) & maxHand(1)
+
+    click(card(C)) :: evaluate(C, handlimit2) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHand(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHand(MH) & maxHand(2)
+
+    click(card(C)) :: evaluate(C, handlimit4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHand(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHand(MH) & maxHand(4)
+
+    click(card(C)) :: evaluate(C, handlimit4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHand(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHand(MH) & maxHand(5)
+
+    %%% operation to play cards - action: handlimitX %%%
+    click(card(C)) :: evaluate(C, keeperlimit2) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHoard(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHoard(MH) & maxHoard(2)
+
+    click(card(C)) :: evaluate(C, keeperlimit3) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHoard(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHoard(MH) & maxHoard(3)
+
+    click(card(C)) :: evaluate(C, keeperlimit4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHoard(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHoard(MH) & maxHoard(4)
+
+
     %%% operation to add discarded cards to deck %%%
     click(deckreshuffle) :: isdeckempty & discardedgoal(G) ==&gt; ~discardedgoal(G)
->>>>>>> Stashed changes
+    click(deckreshuffle) :: isdeckempty & discardedrule(R) ==&gt; ~discardedrule(R)
 
     %%% operations to restart/reset game %%%
     newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
