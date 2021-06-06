@@ -233,7 +233,7 @@
     remove(X,X!L,M) :- remove(X,L,M)
     remove(X,Y!L,Y!M) :- distinct(X,Y) & remove(X,L,M)
 
-    keepers(A) :- evaluate(setofall(B, keeper(B)), A)
+    keepers(A) :- evaluate(setofall(B, keeper(B) & ~discardedkeeper(B)), A)
 
     goals(A) :- evaluate(setofall(B, goal(B, Q, Z) & ~discardedgoal(B)), A)
 
@@ -262,10 +262,12 @@
     innerhtml(turn, P) :- isplayer(P) & control(P)
     style(turn,display,none) :- isplayer(P) & won(P)
 
-    style(hoardlimitdescription,display,inline) :- numplayed(N) & play(T) & evaluate(N, T) & control(P) & hoard(P, H) & maxHoard(MH) & lessthan(MH, length(H))
-    style(hoardlimitdescription,display,none) :- ~and(numplayed(N) & play(T) & evaluate(N, T), control(P) & hoard(P, H) & maxHoard(MH) & lessthan(MH, length(H)))
-    style(handlimitdescription,display,inline) :- numplayed(N) & play(T) & evaluate(N, T) & control(P) & hand(P, H) & maxHand(MH) & lessthan(MH, length(H))
-    style(handlimitdescription,display,none) :- ~and(numplayed(N) & play(T) & evaluate(N, T), control(P) & hand(P, H) & maxHand(MH) & lessthan(MH, length(H)))
+    resolvehandlimit :- numplayed(N) & play(T) & evaluate(N, T) & control(P) & hand(P, H) & maxHand(MH) & evaluate(length(H), HH) & lessthan(MH, HH)
+    resolvehoardlimit :- numplayed(N) & play(T) & evaluate(N, T) & control(P) & hoard(P, H) & maxHoard(MH) & evaluate(length(H), HH) & lessthan(MH, HH)
+    style(hoardlimitdescription,display,inline) :- resolvehoardlimit
+    style(hoardlimitdescription,display,none) :- ~resolvehoardlimit
+    style(handlimitdescription,display,inline) :- resolvehandlimit
+    style(handlimitdescription,display,none) :- ~resolvehandlimit
 
     style(start, display, block) :- ~won(P) & control(Q) & firstmove(Q)
     style(start, display, none) :- or(won(P), control(Q) & ~firstmove(Q))
@@ -284,7 +286,7 @@
     style(card(A), background, gold) :- hoard(mrg, L) & member(A, L)
     style(card(A), background, pink) :- hand(vinay, L) & member(A, L)
     style(card(A), background, red) :- hoard(vinay, L) & member(A, L)
-    style(card(A), background, gray) :- or(discardedgoal(A), discardedrule(A))
+    style(card(A), background, gray) :- or(discardedgoal(A), discardedrule(A), discardedkeeper(A))
     
     style(card(A), background, white) :- indeck(A)
 
@@ -371,10 +373,27 @@
     click(card(C)) :: evaluate(C, keeperlimit4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
     & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHoard(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHoard(MH) & maxHoard(4)
 
+    %%% click operations to resolve hand rule violations - discard keeper %%%
+    click(card(C)) :: keeper(C) & control(P) & hand(P, H) & resolvehandlimit & remove(C, H, LL)
+    ==&gt; discardedkeeper(C) & ~hand(P, H) & hand(P, LL)
+
+    %%% click operations to resolve hoard rule violations - discard keeper %%%
+    click(card(C)) :: keeper(C) & control(P) & hoard(P, H) & resolvehoardlimit & remove(C, H, LL)
+    ==&gt; discardedkeeper(C) & ~hoard(P, H) & hoard(P, LL)
+
+    %%% click operations to resolve hand rule violations - discard goal %%%
+    click(card(C)) :: goals(G) & member(C, G) & control(P) & hand(P, H) & resolvehandlimit & remove(C, H, LL)
+    ==&gt; discardedgoal(C) & ~hand(P, H) & hand(P, LL)
+
+    %%% click operations to resolve hand rule violations - discard action %%%
+    click(card(C)) :: newrule(C) & control(P) & hand(P, H) & resolvehandlimit & remove(C, H, LL)
+    ==&gt; discardedaction(C) & ~hand(P, H) & hand(P, LL)
+
 
     %%% operation to add discarded cards to deck %%%
     click(deckreshuffle) :: isdeckempty & discardedgoal(G) ==&gt; ~discardedgoal(G)
     click(deckreshuffle) :: isdeckempty & discardedrule(R) ==&gt; ~discardedrule(R)
+    click(deckreshuffle) :: isdeckempty & discardedkeeper(K) ==&gt; ~discardedkeeper(K)
 
     %%% operations to restart/reset game %%%
     newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
