@@ -108,10 +108,9 @@
           <td id="card(keeperlimit2)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper Limit: 2<label style="font-size:12"></label></td>
           <td id="card(keeperlimit3)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper Limit: 3<label style="font-size:12"></label></td>
           <td id="card(keeperlimit4)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper Limit: 4<label style="font-size:12"></label></td>
-          <td id="xxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Steal opponent hand<label style="font-size:12"></label></td>
-          <td id="xxxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Erase opponent hand<label style="font-size:12"></label></td>
-          <td id="xxxxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Erase opponent keepers<label style="font-size:12"></label></td>
-          <td id="xxxxxx" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Draw one more<label style="font-size:12"></label></td>
+          <td id="card(stealopphand)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Steal opponent hand<label style="font-size:12"></label></td>
+          <td id="card(endturn)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">End turn<label style="font-size:12"></label></td>
+          <td id="card(backtobasics)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Back to the Basics<label style="font-size:12"></label></td>
         </tr>
       </tbody>
     </table>
@@ -207,6 +206,9 @@
     newrule(keeperlimit2)
     newrule(keeperlimit3)
     newrule(keeperlimit4)
+    newrule(backtobasics)
+    newrule(endturn)
+    newrule(stealopphand)
 
     control(mrg)
     isplayer(vinay)
@@ -273,8 +275,8 @@
     style(start, display, none) :- or(won(P), control(Q) & ~firstmove(Q))
     style(draw,display,block) :- ~won(P) & control(P) &  ~firstmove(P) & numdrawn(N) & take(X) & lessthan(N,X)         % Note, under a closed-world interpretation it
     style(draw,display,none) :- or(won(P), control(Q) & firstmove(Q), numdrawn(N) & take(X) & evaluate(N, X))         % is safe to check ~won(P) without checking if
-    style(endturn,display,block) :- ~won(P) & numdrawn(ND) & take(T) & evaluate(ND, T) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
-    style(endturn,display,none) :- or(won(P), numplayed(N) & play(X) & ~evaluate(N, X))     % is equivalent to falsity
+    style(endturn,display,block) :- ~won(P) & or(~resolvehoardlimit & ~resolvehandlimit & numdrawn(ND) & take(T) & evaluate(ND, T) & numplayed(N) & play(X) & evaluate(N, X), hand(P, nil))       % P is a player since the non-existence of fact
+    style(endturn,display,none) :- or(won(P), numplayed(N) & play(X) & ~evaluate(N, X), resolvehoardlimit, resolvehandlimit)     % is equivalent to falsity
     style(deckreshuffle,display,none) :- or(won(P), ~isdeckempty) 
     style(deckreshuffle,display,block) :- ~won(P) & isdeckempty 
 
@@ -373,21 +375,31 @@
     click(card(C)) :: evaluate(C, keeperlimit4) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
     & remove(C, L, LL) & evaluate(plus(N, 1), NN) & maxHoard(MH) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~maxHoard(MH) & maxHoard(4)
 
+    %%% special rules - swap opponent hand %%%
+    click(card(C)) :: evaluate(C, stealopphand) & actions(A) & member(C, A) & control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & remove(C, L, LL) & hand(Q, LQ) & evaluate(plus(N, 1), NN) ==&gt; discardedrule(C) & ~hand(P, L) & ~hand(Q, LQ) & hand(Q, LL) & hand(P, LQ)
+
+    %%% special rules - end turn %%%
+    click(card(C)) :: evaluate(C, endturn) & actions(A) & member(C, A) & control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & remove(C, L, LL) & numdrawn(ND) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(0) & ~numdrawn(ND) & numdrawn(0) & ~control(P) & control(Q)
+
+    %%% special rules - back to the basics %%%
+    click(card(C)) :: evaluate(C, backtobasics) & actions(A) & member(C, A) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L)
+    & remove(C, L, LL) & evaluate(plus(N, 1), NN) & take(T) ==&gt; discardedrule(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN) & ~play(X) & play(1) & ~take(T) & take(1)
+
     %%% click operations to resolve hand rule violations - discard keeper %%%
-    click(card(C)) :: keeper(C) & control(P) & hand(P, H) & resolvehandlimit & remove(C, H, LL)
+    click(card(C)) :: keeper(C) & control(P) & hand(P, H) & resolvehandlimit & member(C, H) & remove(C, H, LL)
     ==&gt; discardedkeeper(C) & ~hand(P, H) & hand(P, LL)
 
     %%% click operations to resolve hoard rule violations - discard keeper %%%
-    click(card(C)) :: keeper(C) & control(P) & hoard(P, H) & resolvehoardlimit & remove(C, H, LL)
+    click(card(C)) :: keeper(C) & control(P) & hoard(P, H) & resolvehoardlimit & member(C, H) & remove(C, H, LL)
     ==&gt; discardedkeeper(C) & ~hoard(P, H) & hoard(P, LL)
 
     %%% click operations to resolve hand rule violations - discard goal %%%
-    click(card(C)) :: goals(G) & member(C, G) & control(P) & hand(P, H) & resolvehandlimit & remove(C, H, LL)
+    click(card(C)) :: goals(G) & member(C, G) & control(P) & hand(P, H) & resolvehandlimit & member(C, H) & remove(C, H, LL)
     ==&gt; discardedgoal(C) & ~hand(P, H) & hand(P, LL)
 
     %%% click operations to resolve hand rule violations - discard action %%%
-    click(card(C)) :: newrule(C) & control(P) & hand(P, H) & resolvehandlimit & remove(C, H, LL)
-    ==&gt; discardedaction(C) & ~hand(P, H) & hand(P, LL)
+    click(card(C)) :: newrule(C) & control(P) & hand(P, H) & resolvehandlimit & member(C, H) & remove(C, H, LL)
+    ==&gt; discardedrule(C) & ~hand(P, H) & hand(P, LL)
 
 
     %%% operation to add discarded cards to deck %%%
