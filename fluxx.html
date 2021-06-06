@@ -26,9 +26,102 @@
         <h2 style="color:lightseagreen; display:inline;" id="turn"></h2>
         <h2 style="display:none; color:lightseagreen;" id="turndescription2">'s turn</h2>
     </div>
+    <Button style="padding: 10px; display:none;" id="draw" onclick="modbutton(this)">Draw a card</Button>
+    <Button style="padding: 10px; display:none;" id="endturn" onclick="modbutton(this)">End your turn</Button>
+    <Button style="padding: 10px; display:none;" id="deckreshuffle" onclick="modbutton(this)">Reshuffle deck</Button>
+    <p style="display:none;font-weight: bold;" id="maxhand">Max cards in hand:</p>
+    <p style="display:inline;font-weight: bold;" id="maxhandnum"></p>
+    <p style="display:none;font-weight: bold;" id="maxhoard">Max keepers in hoard:</p>
+    <p style="display:inline;font-weight: bold;" id="maxhoardnum"></p>        
+    <p style="display:none;font-weight: bold;" id="take">   Cards drawn per turn:</p>
+    <p style="display:inline;font-weight: bold;" id="takenum"></p>
+    <p style="display:none;font-weight: bold;" id="play">   Cards played per turn:</p>
+    <p style="display:inline;font-weight: bold;" id="playnum"></p>
 
-    <Button style="padding: 10px; display:none;" id="draw">Draw a card</Button>
-    <Button style="padding: 10px; display:none;" id="endturn">End your turn</Button>
+    <table cellspacing="0" border="1">
+      <tbody>
+        <tr>
+          <td id="card(brain)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Brain</td>
+          <td id="card(bread)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Bread</td>
+          <td id="card(chocolate)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Chocolate</td>
+          <td id="card(cookies)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Cookies</td>
+          <td id="card(death)" width="100" height="100"align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Death</td>
+          <td id="card(dreams)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Dreams</td>
+          <td id="card(love)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Love</td>
+          <td id="card(milk)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Milk</td>
+          <td id="card(money)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Money</td>
+          <td id="card(moon)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Moon</td>
+        </tr>
+        <tr>
+          <td id="card(peace)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Peace</td>
+          <td id="card(rocket)" width="100" height="100"align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Rocket</td>
+          <td id="card(sleep)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Sleep</td>
+          <td id="card(sun)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Sun</td>
+          <td id="card(television)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Television</td>
+          <td id="card(time)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Time</td>
+          <td id="card(toaster)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: Toaster</td>
+          <td id="card(war)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Keeper: War</td>
+          <td id="card(appliances)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Appliances <label style="font-size:12">Toaster + Television</label></td>
+          <td id="card(baked)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Baked <label style="font-size:12">Bread + Cookies</label></td>
+        </tr>
+        <tr>
+          <td id="card(bedtime)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Bedtime <label style="font-size:12">Sleep + Time</label></td>
+          <td id="card(chocolatecookies)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: ChocoCookies <label style="font-size:12">Chocolate + Cookies</label></td>
+          <td id="card(chocolatemilk)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: ChocoMilk <label style="font-size:12">Chocolate + Milk</label></td>
+          <td id="card(deathbychocolate)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: DeathbyChoco <label style="font-size:12">Death + Chocolate</label></td>
+          <td id="card(dreamland)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Dreamland <label style="font-size:12">Sleep + Dreams</label></td>
+          <td id="card(loveonthebrain)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: LoveOnBrain <label style="font-size:12">Love + Brain</label></td>
+          <td id="card(hippyism)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Hippyism <label style="font-size:12">Peace + Love</label></td>
+          <td id="card(milkandcookies)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Milk&Cookies <label style="font-size:12">Milk + Cookies</label></td>
+          <td id="card(nightandday)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Day n' Night <label style="font-size:12">Sun + Moon</label></td>
+          <td id="card(nuclear)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Nuclear <label style="font-size:12">Rocket + War</label></td>
+        </tr>
+        <tr>
+          <td id="card(rocketscience)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: RocketScience <label style="font-size:12">Rocket + Brain</label></td>
+          <td id="card(apollo)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Apollo <label style="font-size:12">Rocket + Moon</label></td>
+          <td id="card(hotchocolate)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: HotChoco <label style="font-size:12">Sun + Chocolate</label></td>
+          <td id="card(timeismoney)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Time=Money <label style="font-size:12">Time + Money</label></td>
+          <td id="card(timetravel)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: TimeTravel <label style="font-size:12">Time + Rocket</label></td>
+          <td id="card(toast)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Toast <label style="font-size:12">Bread + Toaster</label></td>
+          <td id="card(waranddeath)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: War&Death <label style="font-size:12">War + Death</label></td>
+          <td id="card(lottery)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Goal: Lotto <label style="font-size:12">Dreams + Money</label></td>
+          <td id="card(4,9)" width="100" height="100" align="center" valign="center" onclick="modbutton(this)" style="cursor: text;">Action: FUCK <label style="font-size:12">Game over</label></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="background:black;width:500px;height:200px;">
+      <h2 style="display:block;font-weight: bold; text-decoration: underline;color:white;">Color code</h2>
+      <p style="display:inline;font-weight: bold;color:pink;" >Vinay's hand color: PINK</p>
+      <br>
+      <p style="display:inline;font-weight: bold;color:red;">Vinay's hoard color: RED</p>
+      <br> 
+      <p style="display:inline;font-weight: bold;color:yellow;" id="take">MRG's hand color: YELLOW</p>
+      <br>
+      <p style="display:inline;font-weight: bold;color:gold;" id="play">MRG's hoard color: GOLD</p>
+      <br>
+      <p style="display:inline;font-weight: bold;color:white;" id="take">Card in deck: WHITE</p>
+      <br>
+      <p style="display:inline;font-weight: bold;color:gray;" id="play">Card discarded: GRAY</p>
+    </div>
+
+    <br>
+    <p style="display:inline-block;font-weight:bold;" color="green">CURRENT GOAL: </p>
+    <p style="display:inline-block;font-weight:bold;" color="green" id="thegoalthatiscurrent"> </p>
+    <br>
+    <br>
+    <p style="display:inline;font-weight:bold;">Vinay's hand: </p> 
+    <p id="handofvinay" style="display:inline;font-weight:bold;"></p>
+    <br>
+    <p style="display:inline;font-weight:bold;">Vinay's hoard: </p>
+    <p id="hoardofvinay" style="display:inline;font-weight:bold;"></p>
+    <br>
+    <p style="display:inline;font-weight:bold;">MRG's hand: </p> 
+    <p id="handofmrg" style="display:inline;font-weight:bold;"></p>
+    <br>
+    <p style="display:inline;font-weight:bold;">MRG's hoard: </p>
+    <p id="hoardofmrg" style="display:inline;font-weight:bold;"></p>
+    <br>
   </body>
 
     
@@ -77,9 +170,8 @@
     control(mrg)
     isplayer(vinay)
     isplayer(mrg)
-    take(0)
-    play(0)
-    numplayed(0)
+    take(1)
+    play(1)
     maxHand(3)
     maxHoard(3)
     numdrawn(0)
@@ -88,8 +180,8 @@
     hand(mrg,[])
     hoard(vinay,[])
     hoard(mrg,[])
-    goalinplay()
-    deck([appliances,baked,bedtime,chocolatemilk,deathbychocolate,dreamland,loveonthebrain,hippyism,milkandcookies,nightandday,nuclear,rocketscience,apollo,hotchocolate,timeismoney,timetravel,toast,waranddeath,lottery,brain,bread,chocolate,cookies,death,dreams,love,milk,money,moon,peace,rocket,sleep,television,time,toaster,war])
+    goalinplay(nogoal)
+    deck([appliances,baked,bedtime,chocolatemilk,deathbychocolate,dreamland,loveonthebrain,hippyism,milkandcookies,nightandday,nuclear,rocketscience,apollo,hotchocolate,timeismoney,timetravel,toast,waranddeath,lottery,brain,bread,chocolate,cookies,death,dreams,love,milk,money,moon,peace,rocket,sleep,television,time,toaster,war,chocolatecookies,sun])
 
   </textarea>
 
@@ -107,16 +199,66 @@
     won(P) :- goalinplay(G) & goal(G, A, B) & hoard(P, L) & member(A, L) & member(B, L)
 
     innerhtml(win, P) :- won(P)
+
+
+
     style(windescription,display,block) :- won(P)
 
-    style(turndescription1,display,inline) :- ~won(P)
-    style(turndescription2,display,inline) :- ~won(P)
-    innerhtml(turn, P) :- ~won(Q) & control(P)
+    style(turndescription1,display,inline) :- isplayer(P) & control(P)
+    style(turndescription1,display,none) :- isplayer(P) & won(P)
+    style(turndescription2,display,inline) :- isplayer(P) & control(P)
+    style(turndescription2,display,none) :- isplayer(P) & won(P)
+    innerhtml(turn, P) :- isplayer(P) & control(P)
+    style(turn,display,none) :- isplayer(P) & won(P)
 
-    style(draw,display,block) :- ~won(P) & numdrawn(N) & take(X) & lessthan(N, X)
-    style(endturn,display,block) :- ~won(P) & numplayed(N) & play(X) & evaluate(N, X)
+    style(draw,display,block) :- ~won(P) & numdrawn(N) & take(X) & lessthan(N, X)           % Note, under a closed-world interpretation it
+    style(draw,display,none) :- or(won(P), numdrawn(N) & take(X) & ~lessthan(N, X))         % is safe to check ~won(P) without checking if
+    style(endturn,display,block) :- ~won(P) & numplayed(N) & play(X) & evaluate(N, X)       % P is a player since the non-existence of fact
+    style(endturn,display,none) :- or(won(P), numplayed(N) & play(X) & ~evaluate(N, X))     % is equivalent to falsity
+    style(deckreshuffle,display,none) :- or(won(P), ~evaluate(deck(L),nil)) 
+    style(deckreshuffle,display,block) :- ~won(P) & deck(L) & evaluate(length(L), 0) 
+
+    activecard(A) :- or(goalinplay(A), isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L), isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L))
+
+    style(card(G), background, green) :- goalinplay(G)
+    style(card(A), background, yellow) :- isplayer(P) & evaluate(P, mrg) & hand(P, L) & member(A, L)
+    style(card(A), background, gold) :- isplayer(P) & evaluate(P, mrg) & hoard(P, L) & member(A, L)
+    style(card(A), background, pink) :- isplayer(P) & evaluate(P, vinay) & hand(P, L) & member(A, L)
+    style(card(A), background, red) :- isplayer(P) & evaluate(P, vinay) & hoard(P, L) & member(A, L)
+    style(card(A), background, gray) :- deck(D) & ~member(A, D) & ~activecard(A)
     
-    click(endturn) :: control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) ==&gt; ~control(P) & control(Q)
+    style(card(A), background, white) :- deck(D) & member(A, D) & ~activecard(A)
+
+    style(maxhand,display,inline) :- isplayer(P) & ~won(P)
+    innerhtml(maxhandnum, N) :- isplayer(P) & ~won(P) & maxHand(N)
+    style(maxhoard,display,inline) :- isplayer(P) & ~won(P)
+    innerhtml(maxhoardnum, N) :- isplayer(P) & ~won(P) & maxHoard(N)
+    style(take,display,inline) :- isplayer(P) & ~won(P)
+    style(take,display,inline) :- isplayer(P) & ~won(P)
+    innerhtml(takenum, N) :- isplayer(P) & ~won(P) & take(N)
+    style(play,display,inline) :- isplayer(P) & ~won(P)
+    innerhtml(playnum, N) :- isplayer(P) & ~won(P) & play(N)
+
+    innerhtml(thegoalthatiscurrent, A) :- goalinplay(A) 
+    innerhtml(handofvinay, Z) :- hand(vinay, A) & evaluate(delistify(A), Z)
+    innerhtml(hoardofvinay, Z) :- hoard(vinay, A) & evaluate(delistify(A), Z)
+    innerhtml(handofmrg, Z) :- hand(mrg, A) & evaluate(delistify(A), Z)
+    innerhtml(hoardofmrg, Z) :- hoard(mrg, A) & evaluate(delistify(A), Z)
+
+    click(endturn) :: control(P) & isplayer(P) & isplayer(Q) & distinct(P, Q) & numplayed(NP) & play(PL) & evaluate(NP, PL) & numdrawn(ND) & take(DL) & evaluate(ND, DL) ==&gt; ~control(P) & control(Q) & ~numdrawn(ND) & numdrawn(0) & ~numplayed(NP) & numplayed(0)
+
+    newgame() :: hand(vinay, LL) & hand(mrg, ZZ) & hoard(vinay, LLL) & hoard(mrg, ZZZ) ==&gt; ~hand(vinay, LL) & ~hand(mrg, ZZ) & hand(vinay, []) & hand(mrg, []) & ~hoard(mrg, ZZZ) & ~hoard(vinay, LLL) & hoard(vinay, []) & hoard(mrg, [])
+    newgame() :: keepers(A) & goals(B) & evaluate(append(B, A), F) & newrules(C) & deck(Q) & evaluate(append(F, C), Z) ==&gt; ~deck(Q) & deck(Z) 
+
+    click(draw) :: control(P) & isplayer(P) & hand(P, L) & deck(Z) & numdrawn(N) & take(X) & lessthan(N, X) & evaluate(choose(A, member(A, Z)), S) & evaluate(append([S], L), Q) & remove(S, Z, M) & evaluate(plus(N, 1), NN) ==&gt; ~hand(P, L) & hand(P, Q) & ~deck(Z) & deck(M) & ~numdrawn(N) & numdrawn(NN)
+
+    click(card(C)) :: keeper(C) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & hoard(P, H) & evaluate(append([C], H), HH) & remove(C, L, LL) & evaluate(plus(N, 1), NN) ==&gt; ~hoard(P, H) & hoard(P, HH) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
+
+    click(card(C)) :: goals(LG) & member(C, LG) & control(P) & isplayer(P) & numplayed(N) & play(X) & lessthan(N, X) & hand(P, L) & member(C, L) & goalinplay(G) & remove(C, L, LL) & evaluate(plus(N, 1), NN) & goalinplay(A) ==&gt; ~goalinplay(G) & goalinplay(C) & ~hand(P, L) & hand(P, LL) & ~numplayed(N) & numplayed(NN)
+
+
+    click(deckreshuffle) :: deck(B) & evaluate(length(B), 0) & keepers(K) & goals(G) & evaluate(setofall(A, or(member(A, K) & ~activecard(A), member(A, G) & ~activecard(A))), Z) ==&gt; ~deck(B) & deck(Z)
+
 
    
   </textarea>
